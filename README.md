@@ -11,3 +11,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 4. next/head and next/script study!
 
 5. layout and styles.module scss setting
+
+6. getStaticProps
+
+7. Dynamic Routes
