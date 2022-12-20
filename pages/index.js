@@ -3,19 +3,16 @@ import Layout, { siteTitle } from '../components/laylout.js';
 import utilStyles from '../styles/utils.module.scss';
 import Link from 'next/link';
 import Date from '../components/date';
-
+const { HOST_NAME  } = process.env;
 
 import { getSortedPostsData } from '../lib/index';
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
 
-  const data = await fetch('http://localhost:3000/api/naver?query=news&searchText=코로나&display=10&start=1')
-    .then((res) => 
-      {
-      return res.json();
-      }
-  )
+  const data = await fetch(`${HOST_NAME}/api/naver?query=news&searchText=코로나&display=10&start=1`)
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
   
   const pages = [
     {
@@ -29,20 +26,18 @@ export async function getStaticProps() {
     props: {
       allPostsData,
       pages,
-      news: data.text.items
+      news: data ? data.text.items : []
     },
   };
 }
 
 export default function Home({ allPostsData, pages, news }) {
-  
-  console.log(news);
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      {/* <nav>
+      <nav>
         <ul>
           { pages.map(({ pageName, path, id }) => (
             <li className={utilStyles.listItem} key={id}>
@@ -50,12 +45,12 @@ export default function Home({ allPostsData, pages, news }) {
           </li>
           ))}
         </ul>
-      </nav> */}
-      {/* <section className={utilStyles.headingMd}>
+      </nav>
+      <section className={utilStyles.headingMd}>
         <h1>Blog</h1>
         <ul>
           { allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
+            <li className={utilStyles.listItem} key={id + 'blog'}>
             <Link href={`/posts/${id}`}>{title}</Link>
             <br />
             <small className={utilStyles.lightText}>
@@ -64,13 +59,12 @@ export default function Home({ allPostsData, pages, news }) {
           </li>
           ))}
         </ul>
-      </section> */}
+      </section>
       <section className={utilStyles.headingMd}>
         <h1>News</h1>
         <ul>
-          <li>
-            { news.map(({ id, pubDate, title, link }) => (
-              <li className={utilStyles.listItem} key={id}>
+            { news.map(({ pubDate, title, link }) => (
+              <li className={utilStyles.listItem} key={link + 'news'}>
               <Link href={link}>{title}</Link>
               <br />
               <small className={utilStyles.lightText}>
@@ -78,16 +72,6 @@ export default function Home({ allPostsData, pages, news }) {
               </small>
             </li>
             ))}
-          </li>
-          {/* {news.map(({ title, pubDate, description, link }) => {
-            <li className={utilStyles.listItem} key={pubDate}>
-              <Link href={link}>{title}</Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={pubDate} />
-              </small>
-            </li>
-          })} */}
         </ul>
       </section>
     </Layout>

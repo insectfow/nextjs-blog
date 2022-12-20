@@ -1,14 +1,14 @@
 import '../styles/globals.scss';
 import { updateProfile } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import { authOnchange, authService } from '../components/firebase';
+// import { authOnchange, authService } from '../components/firebase';
 
 
 
 const App = ({ Component, pageProps }) => {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userObj, setUserObj] = useState(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     // const sns = (user) => {
     //   setIsLoggedIn(true);

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   }).then((res) => {
     return res.json();
   }).catch((error) => {
-    error('naver 검색 api 문제 발생!', error);
+    return 'naver 검색 api 문제 발생!' + error.message;
   })
   res.status(200).json({ text: fetchs });
 }
