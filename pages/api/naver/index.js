@@ -1,4 +1,4 @@
-const { NAVER_CLIENT_ID, NAVER_CLIENT_SECRET } = process.env;
+const { REACT_APP_NAVER_CLIENT_ID, REACT_APP_NAVER_CLIENT_SECRET } = process.env;
 
 // 네이버 뉴스 검색
 
@@ -7,8 +7,8 @@ const { NAVER_CLIENT_ID, NAVER_CLIENT_SECRET } = process.env;
 
 export default async function handler(req, res) {
   const query = req.query;
-  const clientId = NAVER_CLIENT_ID;
-  const secretKey = NAVER_CLIENT_SECRET;
+  const clientId = REACT_APP_NAVER_CLIENT_ID;
+  const secretKey = REACT_APP_NAVER_CLIENT_SECRET;
   const encodeText = encodeURI(query.searchText);
   const apiUrl = `https://openapi.naver.com/v1/search/${query.query}.json?query=${encodeText}&display=10`;
   const fetchs = await fetch(apiUrl, {

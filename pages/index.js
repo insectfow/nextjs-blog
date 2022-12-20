@@ -3,15 +3,13 @@ import Layout, { siteTitle } from '../components/laylout.js';
 import utilStyles from '../styles/utils.module.scss';
 import Link from 'next/link';
 import Date from '../components/date';
-const { HOST_NAME  } = process.env;
-import absoluteUrl from 'next-absolute-url'
+const { REACT_APP_VERCEL_URL } = process.env;
 import { getSortedPostsData } from '../lib/index';
 
 export async function getStaticProps() {
-  const { origin } = absoluteUrl(req)
   const allPostsData = getSortedPostsData();
 
-  const data = await fetch(`${origin}/api/naver?query=news&searchText=코로나&display=10&start=1`)
+  const data = await fetch(`${REACT_APP_VERCEL_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`)
     .then((res) => res.json())
     .catch((error) => console.log(error));
   
