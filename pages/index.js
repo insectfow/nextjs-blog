@@ -3,15 +3,15 @@ import Layout, { siteTitle } from '../components/laylout.js';
 import utilStyles from '../styles/utils.module.scss';
 import Link from 'next/link';
 import Date from '../components/date';
-const { REACT_APP_VERCEL_URL } = process.env;
+const { VERCEL_URL } = process.env;
 import { getSortedPostsData } from '../lib/index';
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
 
-  const data = await fetch(`${REACT_APP_VERCEL_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`)
-    .then((res) => res.json())
-    .catch((error) => console.log(error));
+  // const data = await fetch(`${VERCEL_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`)
+  //   .then((res) => res.json())
+  //   .catch((error) => console.log(error));
   
   const pages = [
     {
@@ -25,7 +25,7 @@ export async function getStaticProps() {
     props: {
       allPostsData,
       pages,
-      news: data ? data.text.items : []
+      // news: data ? data.text.items : []
     },
   };
 }
@@ -59,7 +59,7 @@ export default function Home({ allPostsData, pages, news }) {
           ))}
         </ul>
       </section>
-      <section className={utilStyles.headingMd}>
+      {/* <section className={utilStyles.headingMd}>
         <h1>News</h1>
         <ul>
             { news.map(({ pubDate, title, link }) => (
@@ -72,7 +72,7 @@ export default function Home({ allPostsData, pages, news }) {
             </li>
             ))}
         </ul>
-      </section>
+      </section> */}
     </Layout>
   );
 }
