@@ -9,7 +9,7 @@
   "dependencies": {
     "date-fns": "^2.29.3",
     "firebase": "^9.15.0",
-    "firebase-tools": "^1.2.0",
+    "firebase-tools": "^11.19.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
     "next-absolute-url": "^1.2.2",
