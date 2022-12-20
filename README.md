@@ -15,3 +15,5 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 6. getStaticProps
 
 7. Dynamic Routes
+
+8. firebase setting (hosting, firestore, storage)
