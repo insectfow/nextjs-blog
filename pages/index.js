@@ -3,11 +3,29 @@ import Layout, { siteTitle } from '../components/laylout.js';
 import utilStyles from '../styles/utils.module.scss';
 import Link from 'next/link';
 import Date from '../components/date';
-
 import { getSortedPostsData } from '../lib/index';
-import axios from 'axios';
 
-// export async function getStaticProps() {
+import { loadNaverNews } from '../lib/load-naver';
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData();
+
+  const news = await loadNaverNews();
+  // const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`);
+
+  const data = news.items;
+
+  console.log(data);
+
+  return {
+    props: {
+      allPostsData,
+      news: data
+    },
+  };
+}
+
+// export async function getServerSideProps() {
 //   const allPostsData = getSortedPostsData();
 //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`);
 
@@ -18,22 +36,8 @@ import axios from 'axios';
 //       allPostsData,
 //       news: data.items
 //     },
-//   };
+//   }
 // }
-
-export async function getServerSideProps() {
-  const allPostsData = getSortedPostsData();
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`);
-
-  const data = res.data.text;
-
-  return {
-    props: {
-      allPostsData,
-      news: data.items
-    },
-  }
-}
 
 
 export default function Home({allPostsData, news} ){
