@@ -41,6 +41,13 @@ const List = ({ data, title }) => {
     return setInput(value);
   };
 
+  const onKeyDown = (event) => {
+    // 'enter'키의 keycode는 13
+    if (event.keyCode === 13) {
+      SearchNews();
+    }
+  };
+
   const replaceStr = (str) => {
     if (str && typeof str === "string") {
       str = str
@@ -58,8 +65,10 @@ const List = ({ data, title }) => {
       <h1 className={utilStyles.title}>
         {title}
         <div>
-          <input placeholder="검색어" type="text" value={input} onChange={onChange}></input>
-          <button onClick={SearchNews}>검색</button>
+          <input placeholder="검색어" type="text" value={input} onKeyDown={onKeyDown} onChange={onChange}></input>
+          <button onClick={SearchNews}>
+            <img src="/images/search.svg"></img>
+          </button>
         </div>
       </h1>
       {loading && <Loading />}
