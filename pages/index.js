@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/laylout.js';
-import utilStyles from '../styles/utils.module.scss';
-import Link from 'next/link';
-import Date from '../components/date';
-const { VERCEL_URL } = process.env;
-import { getSortedPostsData } from '../lib/index';
+import List from '../components/List';
+
+import { loadNaver } from '../lib/load-naver';
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+  const news = await loadNaver('news');
+  const blog = await loadNaver('blog');
 
   // const data = await fetch(`${VERCEL_URL}/api/naver?query=news&searchText=코로나&display=10&start=1`)
   //   .then((res) => res.json())
@@ -23,56 +22,20 @@ export async function getStaticProps() {
 
   return {
     props: {
-      allPostsData,
-      pages,
-      // news: data ? data.text.items : []
+      news,
+      blog
     },
   };
 }
 
-export default function Home({ allPostsData, pages, news }) {
+export default function Home({ news, blog }) {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <nav>
-        <ul>
-          { pages.map(({ pageName, path, id }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/${path}`}>{pageName}</Link>
-          </li>
-          ))}
-        </ul>
-      </nav>
-      <section className={utilStyles.headingMd}>
-        <h1>Blog</h1>
-        <ul>
-          { allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id + 'blog'}>
-            <Link href={`/posts/${id}`}>{title}</Link>
-            <br />
-            <small className={utilStyles.lightText}>
-              <Date dateString={date} />
-            </small>
-          </li>
-          ))}
-        </ul>
-      </section>
-      {/* <section className={utilStyles.headingMd}>
-        <h1>News</h1>
-        <ul>
-            { news.map(({ pubDate, title, link }) => (
-              <li className={utilStyles.listItem} key={link + 'news'}>
-              <Link href={link}>{title}</Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                {pubDate}
-              </small>
-            </li>
-            ))}
-        </ul>
-      </section> */}
+      <List data={blog} title={'Blog'}></List>
+      <List data={news} title={'News'}></List>
     </Layout>
   );
 }
