@@ -6,6 +6,23 @@
   margin: 1rem 0;
 }
 
+.title {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding-bottom: 10px;
+}
+
+.list {
+  li:last-child {
+    margin-bottom: 0;
+  }
+}
+  
+.listWrap {
+  margin-bottom: 40px;
+}
+
 .headingXl {
   font-size: 2rem;
   line-height: 1.3;
