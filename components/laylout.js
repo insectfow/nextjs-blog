@@ -3,11 +3,15 @@ import Image from "next/image";
 import styles from "../styles/layout.module.scss";
 import utilStyles from "../styles/utils.module.scss";
 import Link from "next/link";
+import Navigation from "./navigation";
 
 const name = "Your Site";
 export const siteTitle = "Your site!";
 
 export default function Layout({ children, home }) {
+
+  console.log(children, home);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,6 +26,7 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <Navigation></Navigation>
       <header className={styles.header}>
         {home ? (
           <>
@@ -42,6 +47,7 @@ export default function Layout({ children, home }) {
         )}
       </header>
       <main>{children}</main>
+      
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
