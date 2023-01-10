@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import utilStyles from "../styles/utils.module.scss";
 import Link from "next/link";
 import Loading from "../components/loading";
@@ -30,9 +30,9 @@ const List = ({ data, title }) => {
             titleRef.current.click();
           }, timer);
         });
-    }
+      }
   };
-
+  
   const onChange = (e) => {
     const {
       target: { value },
@@ -67,23 +67,25 @@ const List = ({ data, title }) => {
         <div>
           <input placeholder="검색어" type="text" value={input} onKeyDown={onKeyDown} onChange={onChange}></input>
           <button onClick={SearchNews}>
-            <img src="/images/search.svg"></img>
+            <img src="/images/search.svg" alt="secarch icon" width='22' height="22"></img>
           </button>
         </div>
       </h1>
       {loading && <Loading />}
       <ul className={utilStyles.list}>
-        {!listData.items
-          ? "데이터가 없어요~"
-          : listData.items.map(({ pubDate, title, link }) => (
+        {
+          listData?.items.map(({ pubDate, title, link, postdate, cafename }) => (
               <li className={utilStyles.listItem} key={link + "listData"}>
-                <Link href={link} value={title}>
+                <Link href={link} value={title}  target='_blank'>
                   {replaceStr(title)}
                 </Link>
-                <br />
-                <small className={utilStyles.lightText}>{pubDate}</small>
+              <br />
+              {pubDate && <small className={utilStyles.lightText}>{pubDate}</small> }
+              {postdate && <small className={utilStyles.lightText}>{postdate}</small> }
+              {cafename && <small className={utilStyles.lightText}>{cafename}</small> }
               </li>
-            ))}
+          ))
+        }
       </ul>
       <a ref={titleRef} href={"#" + title}></a>
     </section>

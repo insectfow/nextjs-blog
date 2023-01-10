@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { createUser, signUser } from '../../lib/firebase';
+import { createUser, signUser } from '../lib/firebase';
+import SocialForm from '../components/SocialForm';
+import Layout, { siteTitle } from '../components/laylout.js';
+import authStyles from '../styles/auth.module.scss'
+
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,16 +47,17 @@ const Auth = () => {
   const onToggle = () => setNewAccount((prev) => !prev);
 
   return (
-    <div className="auth-page">
-      <h1>Login</h1>
-      <form className="auth-form" onSubmit={onSubmit}>
+    <Layout home>
+      <h1 className={authStyles.authForm}>Login</h1>
+      <form className={authStyles.authForm} onSubmit={onSubmit}>
         <input type='text' name="email" required placeholder="email" value={email} onChange={onChanges} />
         <input type="password" name="password" required placeholder="password" value={password} onChange={onChanges} />
         <input type="submit" value={newAccount ? '회원가입하기' : '로그인하기'} />
         {error ? <span className="error-msg">{ error }</span> : null}
       </form>
-      <span className='toggle-btn' onClick={onToggle}>{ newAccount ? '로그인하러가기!' : '가입하러가기!'}</span>
-    </div>
+      <span className={authStyles.toggleBtn} onClick={onToggle}>{newAccount ? '로그인하러가기!' : '가입하러가기!'}</span>
+      <SocialForm />
+    </Layout>
    )
 }
 

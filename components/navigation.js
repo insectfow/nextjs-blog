@@ -5,7 +5,7 @@ const Navigation = () => {
     <nav>
       <ul>
         <li>
-          <Link href='/auth'>Auth</Link>
+          {/* <Link href='/auth'>Auth</Link> */}
         </li>
       </ul>
     </nav>

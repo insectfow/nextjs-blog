@@ -1,13 +1,13 @@
 import '../styles/globals.scss';
 import React, { useEffect, useState } from 'react';
 import { authOnchange, authService } from '../lib/firebase';
+import Auth from '../components/auth'
 
 export default function App({ Component, pageProps }) {
 
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
-
   useEffect(() => {
     const sns = (user) => {
       setIsLoggedIn(true);
@@ -39,5 +39,9 @@ export default function App({ Component, pageProps }) {
   }
 
 
-  return <Component refreshUser={refreshUser} isLoggedIn={isLoggedIn} userObj={userObj} {...pageProps} />;
+  return (init?
+    <>
+      {!isLoggedIn ? <Auth /> : <Component refreshUser={refreshUser} isLoggedIn={isLoggedIn} userObj={userObj} {...pageProps} />}
+    </>
+    : 'Initializing...');
 }
